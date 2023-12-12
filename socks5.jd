@@ -1,0 +1,44 @@
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.ProxySelector;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.List;
+
+public class Socks5Example {
+    public static void main(String[] args) {
+        // 设置SOCKS5代理主机和端口
+        String proxyHost = "your_socks5_proxy_host";
+        int proxyPort = 1080;
+
+        // 设置要访问的网站
+        String targetUrl = "http://www.example.com";
+
+        // 设置系统属性，告诉Java使用SOCKS5代理
+        System.setProperty("socksProxyHost", proxyHost);
+        System.setProperty("socksProxyPort", String.valueOf(proxyPort));
+
+        // 使用ProxySelector来设置代理
+        ProxySelector.setDefault(new ProxySelector() {
+            @Override
+            public List<Proxy> select(URI uri) {
+                return Collections.singletonList(new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(proxyHost, proxyPort)));
+            }
+
+            @Override
+            public void connectFailed(URI uri, SocketAddress sa, IOException ioe) {
+                // Handle connection failure if needed
+            }
+        });
+
+        // 现在可以使用Java的网络功能来连接到网站
+        try {
+            java.net.URL url = new java.net.URL(targetUrl);
+            java.net.URLConnection connection = url.openConnection();
+            // 进行进一步的操作，比如读取数据
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
