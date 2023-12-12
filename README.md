@@ -1,1 +1,2 @@
-# 82lym19-
+要在Java中使用SOCKS5代理，你可以使用Proxy类和ProxySelector接口。以下是一个简单的示例，演示如何通过SOCKS5代理连接到一个网站：
+请替换your_socks5_proxy_host为实际的SOCKS5代理主机地址。这个例子中使用了ProxySelector，以确保只有特定的URI使用SOCKS5代理。在实际应用中，你可能需要根据你的需求进行更复杂的配置。确保在实际使用中处理异常和错误。
